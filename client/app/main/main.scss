@@ -29,10 +29,14 @@
     border-top: 1px solid #E5E5E5;
 }
 
-.calendar-event {
-    background-color: white;
-    border-radius: 5px;
+.list-group {
     color: black;
-    height: 500px;
-    margin-top: 50px;
+}
+
+.calendar-item {
+    text-align: left;
+}
+
+th {
+    color: #666;
 }
