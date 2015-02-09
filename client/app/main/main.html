@@ -15,7 +15,6 @@
     </div>
 
     <div class="col-lg-6 col-md-6 col-sm-6">
-
         <ul class="list-group">
           <li class="list-group-item">
             <h4>Showing Events for</h4>
@@ -24,13 +23,17 @@
           <li class="list-group-item calendar-item" 
               ng-repeat="event in main.calendarEvents">
             <h5>{{event.summary}}</h5>
-            <p>From: {{event.start.dateTime | date:'h:mm:ss a'}}</p>
-            <p>To: {{event.start.dateTime | date:'h:mm:ss a'}}</p>
+            <p ng-if="event.start.dateTime">
+              From: {{event.start.dateTime | date:'h:mm a'}}
+            </p>
+            <p ng-if="event.end.dateTime">
+              To: {{event.end.dateTime | date:'h:mm a'}}
+            </p>
+            <p ng-if="event.start.date">All day
+            </p>
           </li>
          
         </ul>
-
-
 
       </div>
     </div>

@@ -3,9 +3,9 @@
 angular.module('calendarApp')
   .controller('MainCtrl', MainCtrl);
 
-MainCtrl.$inject = ['Auth', 'calendarService', '$http'];
+MainCtrl.$inject = ['Auth', 'calendarService', '$http', '$scope'];
 
-function MainCtrl(Auth, calendarService, $http  ) {
+function MainCtrl(Auth, calendarService, $http, $scope) {
 
   var vm = this;
   var oneDay = 1000 * 60 * 60 * 24;
@@ -19,7 +19,10 @@ function MainCtrl(Auth, calendarService, $http  ) {
   function activate() {
     Auth.isLoggedInAsync(function(loggedIn) {
       if (loggedIn) {
-        calendarService.activate();
+        calendarService.activate().then(function() {
+          vm.date = new Date;
+          updateEvents();
+        });
       }
     });
   }
@@ -35,5 +38,6 @@ function MainCtrl(Auth, calendarService, $http  ) {
     
   function assignEvents() {
     vm.calendarEvents = calendarService.calendarEvents;
+    $scope.$apply();
   }
 }

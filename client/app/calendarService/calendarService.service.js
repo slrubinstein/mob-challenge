@@ -3,9 +3,9 @@
 angular.module('calendarApp')
   .factory('calendarService', calendarService);
 
-calendarService.$inject = ['$http'];
+calendarService.$inject = ['$http', '$q'];
 
-function calendarService($http) {
+function calendarService($http, $q) {
 
   var calendarEvents = [];
 
@@ -16,8 +16,10 @@ function calendarService($http) {
   }
 
   function activate() {
+    var deferred = $q.defer();
     var apiKey, clientId;
     var scopes = 'https://www.googleapis.com/auth/calendar';
+
     $http.get('/api/things').then(function(result) {
       apiKey = result.data.key;
       clientId = result.data.id;      
@@ -26,10 +28,12 @@ function calendarService($http) {
         client_id: clientId,
         scope: scopes,
         immediate: true
-      }, function(result) {
-        loadApi();
+      }, function() {
+        deferred.resolve(loadApi());
       });
     });
+
+    return deferred.promise;
   }
 
   function loadApi() {
@@ -47,7 +51,7 @@ function calendarService($http) {
       '/events?timeMin=' + start + '&timeMax=' + end)
     .then(function(result) {
       angular.copy(result.result.items, calendarEvents);
-      cb(calendarEvents);
+      cb(result.result.items);
     }, function(err) {
       console.log(err)
     });
