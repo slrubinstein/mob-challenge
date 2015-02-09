@@ -39,6 +39,7 @@ function calendarService($http) {
     var calendar = calendar || 'primary',
         start = start || '2015-02-09T14%3A18%3A43.391Z',
         end = end || '2015-02-10T14%3A18%3A43.391Z';
+
     gapi.client.request('/calendar/v3/calendars/' + calendar + 
       '/events?timeMin=' + start + '&timeMax=' + end)
     .then(function(result) {
