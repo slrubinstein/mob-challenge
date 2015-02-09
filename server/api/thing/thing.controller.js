@@ -14,9 +14,13 @@ var Thing = require('./thing.model');
 
 // Get list of things
 exports.index = function(req, res) {
-  Thing.find(function (err, things) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, things);
+  // Thing.find(function (err, things) {
+  //   if(err) { return handleError(res, err); }
+  //   return res.json(200, things);
+  // });
+  return res.json(200, {
+    id: process.env.GOOGLE_ID_MOB,
+    key: process.env.GOOGLE_CALENDER_KEY
   });
 };
 

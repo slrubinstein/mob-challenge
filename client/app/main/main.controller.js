@@ -1,22 +1,22 @@
 'use strict';
 
 angular.module('calendarApp')
-  .controller('MainCtrl', function ($scope, $http) {
-    $scope.awesomeThings = [];
+  .controller('MainCtrl', MainCtrl);
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-    });
+MainCtrl.$inject = ['Auth', 'calendarService', '$http'];
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
+function MainCtrl(Auth, calendarService, $http  ) {
+
+  activate();
+
+  function activate() {
+    
+
+    Auth.isLoggedInAsync(function(loggedIn) {
+      if (loggedIn) {
+        calendarService.activate();
       }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
-    };
-
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
-  });
+    });
+  }
+    
+}
