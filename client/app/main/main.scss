@@ -29,10 +29,16 @@
     border-top: 1px solid #E5E5E5;
 }
 
-.search-by-name {
+.left-col {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
+
+    h4 {
+        float: left;
+        margin-top: 40px;
+        margin-right: 20px;
+    }
 }
 
 .list-group {
@@ -45,4 +51,9 @@
 
 th {
     color: #666;
+}
+
+.glyphicon-chevron-up::before,
+.glyphicon-chevron-down::before {
+    color: white;
 }

@@ -11,6 +11,7 @@ function calendarService($http, $q) {
 
   return {
     activate: activate,
+    addEvent: addEvent,
     calendarEvents: calendarEvents,
     makeRequest: makeRequest
   }
@@ -54,6 +55,25 @@ function calendarService($http, $q) {
       angular.copy(result.result.items, calendarEvents);
       cb(null);
     }, function(err) {
+      console.log(err)
+      cb(err.result.error.message)
+    });
+  }
+
+  function addEvent(eventData, cb) {
+    console.log(eventData)
+    var url = '/calendar/v3/calendars/primary/events'
+    var requestData = eventData;
+    gapi.client.request({
+      path: url,
+      method: 'POST',
+      body: eventData
+    })
+    .then(function(result) {
+      console.log(null)
+      cb(result.statusText);
+    }, function(err) {
+      console.log(err)
       cb(err.result.error.message)
     });
   }
