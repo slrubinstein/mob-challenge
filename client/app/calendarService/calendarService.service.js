@@ -51,17 +51,14 @@ function calendarService($http, $q) {
     gapi.client.request('/calendar/v3/calendars/' + calendar + 
       '/events?timeMin=' + start + '&timeMax=' + end)
     .then(function(result) {
-      console.log(result)
       angular.copy(result.result.items, calendarEvents);
       cb(null);
     }, function(err) {
-      console.log(err)
       cb(err.result.error.message)
     });
   }
 
   function addEvent(eventData, cb) {
-    console.log(eventData)
     var url = '/calendar/v3/calendars/primary/events'
     var requestData = eventData;
     gapi.client.request({
@@ -70,11 +67,9 @@ function calendarService($http, $q) {
       body: eventData
     })
     .then(function(result) {
-      console.log(null)
-      cb(result.statusText);
+      cb(null);
     }, function(err) {
-      console.log(err)
-      cb(err.result.error.message)
+      cb(err.result.error.message);
     });
   }
 }

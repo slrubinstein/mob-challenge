@@ -31,14 +31,13 @@ function MainCtrl(Auth, calendarService, $http, $scope) {
     Auth.isLoggedInAsync(function(loggedIn) {
       if (loggedIn) {
         calendarService.activate().then(function() {
-          vm.date = new Date;
+          setDefaultTime();
           updateEvents();
         });
       } else {
         vm.pleaseLogIn = 'Please log in to view calendars.'
       }
     });
-    setTimeout(setDefaultTime, 1000);
   }
 
   function addNewEvent() {
@@ -59,16 +58,19 @@ function MainCtrl(Auth, calendarService, $http, $scope) {
 
   function confirmAddedEvent(err) {
     if (err) {
-      console.log(err)
-      vm.errMsg.add = err;
+      vm.errMsg.add = 'Error creating event: ' + err;
+      $scope.$apply();
     } else {
       vm.errMsg.add = '';
+      vm.newEvent.summary = '';
+      updateEvents();
     }
   }
 
   function setDefaultTime() {
     var d = new Date();
     var e = new Date();
+    vm.date = new Date();
     d.setHours(9);
     d.setMinutes(0);
     vm.startTime = d;
@@ -78,8 +80,11 @@ function MainCtrl(Auth, calendarService, $http, $scope) {
   }
 
   function updateEvents() {
+    var selectedDay = vm.date.setHours(0);
+    selectedDay = vm.date.setMinutes(1);
+
     var name = vm.calendarName || 'primary'
-    var nextDay = new Date(vm.date.getTime() + oneDay);
+    var nextDay = new Date(selectedDay + oneDay);
 
     calendarService.makeRequest(name,
                                 vm.date.toISOString(),
