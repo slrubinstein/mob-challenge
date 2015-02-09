@@ -5,7 +5,19 @@
 
     <h2>Choose a Date to See Events</h2>
     <div class="col-lg-6 col-md-6 col-sm-6">
-      <h3>Start Date</h3>
+      <div class="search-by-name">
+        <p>Search public calendars by ID or leave blank to search your own:
+          <input type="text"
+                 class="form-control"
+                 ng-model="main.calendarName">
+          <input type="submit"
+                 class="form-control"
+                 ng-click="main.searchByName()">
+          <p ng-if="main.errMsg">{{main.errMsg}}</p>
+
+        </p>
+      </div>
+      <h3>Search Date</h3>
       <div style="display:inline-block; min-height:290px;">
         <datepicker ng-model="main.date" 
                     ng-change="main.updateEvents()"
