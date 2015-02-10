@@ -52,7 +52,7 @@ function MainCtrl(Auth, calendarService, $http, $scope) {
 
     vm.newEvent.start.dateTime = new Date(start).toISOString();
     vm.newEvent.end.dateTime = new Date(end).toISOString();
-
+    vm.calendarName = '';
     calendarService.addEvent(vm.newEvent, confirmAddedEvent);
   }
 
@@ -85,9 +85,9 @@ function MainCtrl(Auth, calendarService, $http, $scope) {
 
     var name = vm.calendarName || 'primary'
     var nextDay = new Date(selectedDay + oneDay);
-
+  
     calendarService.makeRequest(name,
-                                vm.date.toISOString(),
+                                new Date(selectedDay).toISOString(),
                                 nextDay.toISOString(),
                                 assignEvents);
   }
@@ -95,7 +95,7 @@ function MainCtrl(Auth, calendarService, $http, $scope) {
   function assignEvents(result) {
     if (result) {
       vm.errMsg.search = result;
-      $scope.$apply();
+      vm.calendarEvents = [];
       return;
     }
     vm.errMsg.search = '';

@@ -41,12 +41,9 @@ function calendarService($http, $q) {
     gapi.client.load('calendar', 'v3');
   }
 
-  // 2011-08-30T13:22:53.108Z
-  // date.toISOString()
+
   function makeRequest(calendar, start, end, cb) {
-    var calendar = calendar || 'primary',
-        start = start || '2015-02-09T14%3A18%3A43.391Z',
-        end = end || '2015-02-10T14%3A18%3A43.391Z';
+    var calendar = calendar || 'primary';
 
     gapi.client.request('/calendar/v3/calendars/' + calendar + 
       '/events?timeMin=' + start + '&timeMax=' + end)
