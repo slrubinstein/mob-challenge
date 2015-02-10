@@ -28,10 +28,10 @@ function MainCtrl(Auth, calendarService, $http, $scope) {
   activate();
 
   function activate() {
+    setDefaultTime();
     Auth.isLoggedInAsync(function(loggedIn) {
       if (loggedIn) {
         calendarService.activate().then(function() {
-          setDefaultTime();
           updateEvents();
         });
       } else {
@@ -95,7 +95,8 @@ function MainCtrl(Auth, calendarService, $http, $scope) {
   function assignEvents(result) {
     if (result) {
       vm.errMsg.search = result;
-      vm.calendarEvents = [];
+      vm.calendarEvents.length = 0;
+      $scope.$apply();
       return;
     }
     vm.errMsg.search = '';
